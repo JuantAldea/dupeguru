@@ -224,6 +224,8 @@ most users should not have to modify these."
             wordWrap=True,
         )
         self.advanced_vlayout.addWidget(tab_label)
+        self._setupAddCheckbox("ignore_symlinks_box", tr("Ignore symbolic links while scanning"))
+        self.advanced_vlayout.addWidget(self.ignore_symlinks_box)
         self._setupAddCheckbox("include_exists_check_box", tr("Include existence check after scan completion"))
         self.advanced_vlayout.addWidget(self.include_exists_check_box)
         self._setupAddCheckbox("rehash_ignore_mtime_box", tr("Ignore difference in mtime when loading cached digests"))
@@ -342,6 +344,7 @@ most users should not have to modify these."
             self.languageComboBox.setCurrentText(selected_lang)
         if section & Sections.ADVANCED:
             setchecked(self.rehash_ignore_mtime_box, prefs.rehash_ignore_mtime)
+            setchecked(self.ignore_symlinks_box, prefs.ignore_symlinks)
             setchecked(self.include_exists_check_box, prefs.include_exists_check)
         if section & Sections.DEBUG:
             setchecked(self.debugModeBox, prefs.debug_mode)
@@ -359,6 +362,7 @@ most users should not have to modify these."
         prefs.use_regexp = ischecked(self.useRegexpBox)
         prefs.remove_empty_folders = ischecked(self.removeEmptyFoldersBox)
         prefs.ignore_hardlink_matches = ischecked(self.ignoreHardlinkMatches)
+        prefs.ignore_symlinks = ischecked(self.ignore_symlinks_box)
         prefs.rehash_ignore_mtime = ischecked(self.rehash_ignore_mtime_box)
         prefs.include_exists_check = ischecked(self.include_exists_check_box)
         prefs.debug_mode = ischecked(self.debugModeBox)

@@ -226,6 +226,7 @@ class Preferences(PreferencesBase):
         self.scan_tag_year = get("ScanTagYear", self.scan_tag_year)
         self.match_scaled = get("MatchScaled", self.match_scaled)
         self.match_rotated = get("MatchRotated", self.match_rotated)
+        self.ignore_symlinks = get("IgnoreSymlinks", self.ignore_symlinks)
 
     def reset(self):
         self.filter_hardness = 95
@@ -279,6 +280,7 @@ class Preferences(PreferencesBase):
         self.scan_tag_year = False
         self.match_scaled = False
         self.match_rotated = False
+        self.ignore_symlinks = True
 
     def _save_values(self, settings):
         set_ = self.set_value
@@ -333,6 +335,7 @@ class Preferences(PreferencesBase):
         set_("ScanTagYear", self.scan_tag_year)
         set_("MatchScaled", self.match_scaled)
         set_("MatchRotated", self.match_rotated)
+        set_("IgnoreSymlinks", self.ignore_symlinks)
 
     # scan_type is special because we save it immediately when we set it.
     def get_scan_type(self, app_mode):

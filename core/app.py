@@ -140,9 +140,6 @@ class DupeGuru(Broadcaster):
         self.exclude_list = ExcludeList()
         hash_cache_file = op.join(self.appdata, "hash_cache.db")
         fs.filesdb.connect(hash_cache_file)
-        self.directories = directories.Directories(self.exclude_list)
-        self.results = results.Results(self)
-        self.ignore_list = IgnoreList()
         # In addition to "app-level" options, this dictionary also holds options that will be
         # sent to the scanner. They don't have default values because those defaults values are
         # defined in the scanner class.
@@ -150,10 +147,15 @@ class DupeGuru(Broadcaster):
             "escape_filter_regexp": True,
             "clean_empty_dirs": False,
             "ignore_hardlink_matches": False,
+            "ignore_symlinks": True,
             "copymove_dest_type": DestType.RELATIVE,
             "include_exists_check": True,
             "rehash_ignore_mtime": False,
+            "exclude_list": self.exclude_list,
         }
+        self.directories = directories.Directories(options=self.options)
+        self.results = results.Results(self)
+        self.ignore_list = IgnoreList()
         self.selected_dupes = []
         self.details_panel = DetailsPanel(self)
         self.directory_tree = DirectoryTree(self)

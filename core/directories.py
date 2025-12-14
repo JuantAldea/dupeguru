@@ -55,11 +55,13 @@ class Directories:
     """
 
     # ---Override
-    def __init__(self, exclude_list=None):
+    def __init__(self, options=None):
         self._dirs = []
         # {path: state}
         self.states = {}
-        self._exclude_list = exclude_list
+        self.options = options or {}
+        self._exclude_list = self.options.get("exclude_list")
+        self._ignore_symlinks = self.options.get("ignore_symlinks", True)
 
     def __contains__(self, path):
         for p in self._dirs:
@@ -103,6 +105,8 @@ class Directories:
                 for item in iter:
                     j.check_if_cancelled()
                     try:
+                        if item.is_symlink() and self._ignore_symlinks:
+                            continue
                         if item.is_dir():
                             if skip_dirs:
                                 continue

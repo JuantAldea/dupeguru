@@ -346,7 +346,7 @@ def test_default_path_state_override(tmpdir):
 
 class TestExcludeList:
     def setup_method(self, method):
-        self.d = Directories(exclude_list=ExcludeList(union_regex=False))
+        self.d = Directories(options={"exclude_list": ExcludeList(union_regex=False)})
 
     def get_files_and_expect_num_result(self, num_result):
         """Calls get_files(), get the filenames only, print for debugging.
@@ -553,14 +553,14 @@ files: {self.d._exclude_list.compiled_files} all: {self.d._exclude_list.compiled
 
 class TestExcludeDict(TestExcludeList):
     def setup_method(self, method):
-        self.d = Directories(exclude_list=ExcludeDict(union_regex=False))
+        self.d = Directories(options={"exclude_list": ExcludeDict(union_regex=False)})
 
 
 class TestExcludeListunion(TestExcludeList):
     def setup_method(self, method):
-        self.d = Directories(exclude_list=ExcludeList(union_regex=True))
+        self.d = Directories(options={"exclude_list": ExcludeList(union_regex=True)})
 
 
 class TestExcludeDictunion(TestExcludeList):
     def setup_method(self, method):
-        self.d = Directories(exclude_list=ExcludeDict(union_regex=True))
+        self.d = Directories(options={"exclude_list": ExcludeDict(union_regex=True)})
